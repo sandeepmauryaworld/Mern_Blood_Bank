@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       required: [true, "role is required"],
-      enum: ["admin", "organisation", "user", "hospital"],
+      enum: ["admin", "organisation", "donar", "hospital"],
     },
     name: {
       type: String,
@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema(
         return false;
       },
     },
-    hospital: {
+    hospitalName: {
       type: String,
       required: function () {
         if (this.role === "hospital") {
@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "passowrd is required"],
+      required: [true, "password is requied"],
     },
     website: {
       type: String,
@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      required: [true, "phone number is required"],
+      required: [true, "phone numbe is required"],
     },
   },
   { timestamps: true }

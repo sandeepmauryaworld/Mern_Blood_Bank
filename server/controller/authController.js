@@ -5,37 +5,36 @@ const jwt = require("jsonwebtoken");
 const registerController = async (req, res) => {
   try {
     const exisitingUser = await userModel.findOne({ email: req.body.email });
-
-    // validation at exisiting user
+    //validation
     if (exisitingUser) {
       return res.status(200).send({
         success: false,
-        message: "User Alredy exisitng",
+        message: "User ALready exists",
       });
     }
-    // hash password
+    //hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     req.body.password = hashedPassword;
-
-    // rest data
+    //rest data
     const user = new userModel(req.body);
     await user.save();
     return res.status(201).send({
       success: true,
-      message: "User Registered SuccessFully !",
+      message: "User Registerd Successfully",
+      user,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error in Regsiter api",
+      message: "Error In Register API",
       error,
     });
   }
 };
 
-// login call back
+//login call back
 const loginController = async (req, res) => {
   try {
     const user = await userModel.findOne({ email: req.body.email });
@@ -43,6 +42,13 @@ const loginController = async (req, res) => {
       return res.status(404).send({
         success: false,
         message: "Invalid Credentials",
+      });
+    }
+    //check role
+    if (user.role !== req.body.role) {
+      return res.status(500).send({
+        success: false,
+        message: "role dosent match",
       });
     }
     //compare password
@@ -93,4 +99,5 @@ const currentUserController = async (req, res) => {
     });
   }
 };
+
 module.exports = { registerController, loginController, currentUserController };
