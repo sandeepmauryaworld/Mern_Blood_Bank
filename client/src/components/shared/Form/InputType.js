@@ -11,7 +11,7 @@ const InputType = ({
 }) => {
   return (
     <>
-      <div className="mb-3">
+      <div className="mb-1">
         <label htmlFor={lableFor} className="form-label">
           {lableText}
         </label>
