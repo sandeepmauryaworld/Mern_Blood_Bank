@@ -53,3 +53,19 @@
         transform: rotate(360deg);
     }
 }
+
+
+/* ============
+-----navbar
+============== */
+
+.navbar{
+    background-color: black !important;
+    color: wheat;
+}
+
+.nav-link, .navbar-brand{
+    background-color: black !important;
+        color: wheat;
+
+}
