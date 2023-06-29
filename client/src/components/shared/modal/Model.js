@@ -1,11 +1,39 @@
 import React, { useState } from "react";
 import InputType from "../Form/InputType";
-
+import API from "../../../services/API";
+import { useSelector } from "react-redux";
 const Model = () => {
   const [inventoryType, setInventoryType] = useState("in");
   const [bloodGroup, setBloodGroup] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [donarEmail, setDonarEmail] = useState("");
+
+  const { user } = useSelector((state) => state.auth);
+
+  //   handle modal data
+
+  const handleModalSubmit = async () => {
+    try {
+      if (!bloodGroup || !quantity) {
+        return alert("please provide all field");
+      }
+      const { data } = await API.post("/inventory/create-inventory", {
+        donarEmail,
+        email: user?.email,
+        organisation: user?._id,
+        inventoryType,
+        bloodGroup,
+        quantity,
+      });
+      if (data?.success) {
+        alert("New Record Created");
+        window.location.reload();
+      }
+    } catch (error) {
+      window.location.reload();
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -100,7 +128,11 @@ const Model = () => {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleModalSubmit}
+              >
                 Submit
               </button>
             </div>
