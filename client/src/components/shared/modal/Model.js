@@ -30,8 +30,9 @@ const Model = () => {
         window.location.reload();
       }
     } catch (error) {
-      window.location.reload();
       console.log(error);
+      alert(error.response.data.message);
+      window.location.reload();
     }
   };
 
@@ -65,7 +66,7 @@ const Model = () => {
                 <div className="form-check ms-2">
                   <input
                     type="radio"
-                    value={"in"}
+                    value="in"
                     onChange={(e) => setInventoryType(e.target.value)}
                     name="inRadio"
                     defaultChecked
@@ -78,12 +79,12 @@ const Model = () => {
                 <div className="form-check ms-2">
                   <input
                     type="radio"
-                    value={"out"}
+                    value="out"
                     onChange={(e) => setInventoryType(e.target.value)}
-                    name="outRadio"
+                    name="inRadio"
                     className="form-check-input"
                   />
-                  <label htmlFor="in" className="form-check-label">
+                  <label htmlFor="out" className="form-check-label">
                     Out
                   </label>
                 </div>
@@ -93,7 +94,9 @@ const Model = () => {
                 aria-label="Default select example"
                 onChange={(e) => setBloodGroup(e.target.value)}
               >
-                <option selected>Open this select menu</option>
+                <option defaultValue={"Open this select menu"}>
+                  Open this select menu
+                </option>
                 <option value={"O+"}>O+</option>
                 <option value={"O-"}>O-</option>
                 <option value={"AB+"}>AB+</option>
